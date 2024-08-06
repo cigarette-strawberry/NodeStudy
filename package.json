@@ -14,8 +14,7 @@
   "license": "ISC",
   "homepage": "",
   "dependencies": {
+    "jsdom": "^24.1.1",
     "koa": "^2.15.0"
-  },
-  "devDependencies": {},
-  "peerDependencies": {}
+  }
 }
