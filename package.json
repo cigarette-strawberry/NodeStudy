@@ -7,13 +7,15 @@
   "module": "",
   "browser": "",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "test1": "cross-env NODE_ENV=dev node Process/index.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "homepage": "",
   "dependencies": {
+    "cross-env": "^7.0.3",
     "jsdom": "^24.1.1",
     "koa": "^2.15.0"
   }
