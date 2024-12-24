@@ -9,12 +9,32 @@
     <script>
       /**
        * 浏览器同源策略 协议 域名 端口 都相同
+       *
+       * Content-type: application/x-www-form-urlencoded | multipart/form-data | text/plain
        */
-      fetch('http://localhost:3000/patch', {
-        method: 'PATCH'
+      fetch('http://localhost:3000/post', {
+        method: 'post',
+        headers: {
+          'Content-Type': 'application/json'
+        }
       })
         .then(res => res.json())
         .then(data => console.log(data));
+
+      fetch('http://localhost:3000')
+        .then(res => {
+          const headers = res.headers;
+          console.log(headers.get('mini'));
+
+          return res.json();
+        })
+        .then(data => console.log(data));
+
+      const sse = new EventSource('http://localhost:3000/sse');
+
+      sse.addEventListener('test', e => {
+        console.log(e.data);
+      });
     </script>
   </body>
 </html>
