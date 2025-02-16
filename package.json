@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "type": "commonjs",
+  "type": "module",
   "module": "",
   "browser": "",
   "scripts": {
@@ -17,7 +17,9 @@
   "dependencies": {
     "cross-env": "^7.0.3",
     "express": "^4.21.1",
+    "js-yaml": "^4.1.0",
     "jsdom": "^24.1.1",
-    "koa": "^2.15.0"
+    "koa": "^2.15.0",
+    "mysql2": "^3.12.0"
   }
 }
