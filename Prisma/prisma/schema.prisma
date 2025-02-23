@@ -12,3 +12,20 @@ datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
+
+// 文章表
+model Article {
+  id       Int    @id @default(autoincrement()) // 自增主键
+  title    String
+  content  String
+  author   User   @relation(fields: [authorId], references: [id]) // 外键
+  authorId Int // 关联id 把这个 authorId 关联到 user 表的 id
+}
+
+// 用户表 一个用户可以发多个文章 一对多关系
+model User {
+  id       Int       @id @default(autoincrement()) // 自增主键
+  name     String
+  email    String    @unique // 唯一
+  Articles Article[] // 一对多的关系
+}
