@@ -5,10 +5,23 @@ const app = express();
 const port = 3000;
 app.use(express.json()); // 支持post
 
-/* app.get('/', async (req, res) => {
-  const users = await prisma.user.findMany();
-  res.json(users);
-}); */
+app.get('/', async (req, res) => {
+  const data = await prisma.user.findMany({
+    include: {
+      Articles: true
+    }
+  });
+  res.send(data);
+});
+
+app.get('/user/:id', async (req, res) => {
+  const data = await prisma.user.findMany({
+    where: {
+      id: Number(req.params.id)
+    }
+  });
+  res.send(data);
+});
 
 app.post('/create', async (req, res) => {
   const { name, email } = req.body;
@@ -34,6 +47,34 @@ app.post('/create', async (req, res) => {
           }
         ]
       }
+    }
+  });
+  res.send(data);
+});
+
+app.put('/update', async (req, res) => {
+  const { name, email, id } = req.body;
+  const data = await prisma.user.update({
+    data: {
+      name,
+      email
+    },
+    where: {
+      id: Number(id)
+    }
+  });
+  res.send(data);
+});
+
+app.delete('/delete', async (req, res) => {
+  await prisma.article.deleteMany({
+    where: {
+      authorId: Number(req.body.id)
+    }
+  });
+  const data = await prisma.user.delete({
+    where: {
+      id: Number(req.body.id)
     }
   });
   res.send(data);
