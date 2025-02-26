@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "type": "commonjs",
+  "type": "module",
   "module": "",
   "browser": "",
   "scripts": {
@@ -22,6 +22,7 @@
     "express": "^4.21.2",
     "inversify": "^6.2.2",
     "inversify-express-utils": "^6.4.10",
+    "ioredis": "^5.5.0",
     "js-yaml": "^4.1.0",
     "jsdom": "^24.1.1",
     "jsonwebtoken": "^9.0.2",
