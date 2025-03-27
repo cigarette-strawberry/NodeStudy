@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>大文件上传</title>
+  </head>
+  <body>
+    <input type="file" id="file" />
+
+    <script>
+      const file = document.querySelector('#file');
+
+      const chunkFunc = (file, size = 1024 * 1024 * 1) => {
+        const chunks = [];
+        for (let i = 0; i < file.size; i += size) {
+          chunks.push({
+            chunk: file.slice(i, i + size)
+          });
+        }
+        return chunks;
+      };
+
+      const uploadFiles = (chunks, file) => {
+        // 1、批量上传 promise.all
+        // 2、formData 方式上传 file 标识 hash index
+        const chunksList = [];
+        for (let index = 0; index < chunks.length; index++) {
+          const formData = new FormData();
+          formData.append('index', index);
+          formData.append('filename', file.name);
+          formData.append('file', chunks[index]);
+          chunksList.push(
+            fetch('http://127.0.0.1:3000/upload', {
+              method: 'POST',
+              body: formData
+            })
+          );
+        }
+
+        Promise.all(chunksList)
+          .then(res => {
+            console.log(res);
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      };
+
+      file.addEventListener('change', e => {
+        console.log(e.target.files);
+        // 对文件进行切片
+        const file = e.target.files[0]; // file对象 底层继承Blob 需要调用slice 方法进行切割切片
+
+        const chunks = chunkFunc(file);
+
+        uploadFiles(chunks, file);
+      });
+    </script>
+  </body>
+</html>
