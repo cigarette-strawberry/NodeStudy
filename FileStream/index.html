@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <button id="btn">下载</button>
+
+    <script>
+      const btn = document.querySelector('#btn');
+
+      btn.addEventListener('click', e => {
+        fetch('http://127.0.0.1:3000/download', {
+          method: 'POST',
+          body: JSON.stringify({
+            filename: 'th.jpeg'
+          }),
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        })
+          .then(res => {
+            return res.arrayBuffer();
+          })
+          .then(res => {
+            const blob = new Blob([res], { type: 'image/jpeg' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'th.jpeg';
+            a.click();
+          });
+      });
+    </script>
+  </body>
+</html>
