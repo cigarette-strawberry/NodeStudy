@@ -14,9 +14,7 @@
       const chunkFunc = (file, size = 1024 * 1024 * 1) => {
         const chunks = [];
         for (let i = 0; i < file.size; i += size) {
-          chunks.push({
-            chunk: file.slice(i, i + size)
-          });
+          chunks.push(file.slice(i, i + size));
         }
         return chunks;
       };
@@ -40,7 +38,15 @@
 
         Promise.all(chunksList)
           .then(res => {
-            console.log(res);
+            fetch('http://127.0.0.1:3000/merge', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({
+                filename: file.name
+              })
+            });
           })
           .catch(err => {
             console.log(err);
@@ -48,12 +54,9 @@
       };
 
       file.addEventListener('change', e => {
-        console.log(e.target.files);
         // 对文件进行切片
         const file = e.target.files[0]; // file对象 底层继承Blob 需要调用slice 方法进行切割切片
-
         const chunks = chunkFunc(file);
-
         uploadFiles(chunks, file);
       });
     </script>
