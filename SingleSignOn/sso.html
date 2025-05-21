@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>sso</title>
+  </head>
+  <body>
+    <h1>登录页面</h1>
+
+    <form action="/protected" method="get">
+      <label for="username"> 用户名称 <input type="text" name="username" id="username" /> </label>
+      <label for="password"> 用户密码 <input type="text" name="password" id="password" /> </label>
+      <label for="appId"> <input type="hidden" name="appId" id="appId" /> </label>
+      <button type="submit">登录</button>
+    </form>
+
+    <script>
+      const currentUrl = window.location.href;
+      const url = new URL(currentUrl);
+      const params = new URLSearchParams(url.search);
+      const appId = params.get('appId');
+      document.getElementById('appId').value = appId;
+    </script>
+  </body>
+</html>
