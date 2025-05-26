@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>qrcode</title>
+  </head>
+  <body>
+    <img id="qrcode" src="" alt="" srcset="" />
+    <div id="status-div"></div>
+
+    <script>
+      const status = {
+        0: '未授权',
+        1: '已授权',
+        2: '已过期'
+      };
+      const qrcode = document.querySelector('#qrcode');
+      const statusDiv = document.querySelector('#status-div');
+
+      let userId = null;
+      statusDiv.innerText = status[0];
+
+      fetch('/qrcode')
+        .then(res => res.json())
+        .then(data => {
+          qrcode.src = data.code;
+          userId = data.userId;
+
+          let timer = setInterval(() => {
+            fetch(`/check/${userId}`)
+              .then(res => res.json())
+              .then(res => {
+                statusDiv.innerText = status[res.status];
+                if (res.status !== 0) {
+                  // 过期或者已授权 停止轮询
+                  clearInterval(timer);
+                }
+              });
+          }, 1000);
+        });
+    </script>
+  </body>
+</html>
