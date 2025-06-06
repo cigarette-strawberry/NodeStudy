@@ -20,6 +20,7 @@
     "@fastify/mysql": "^5.0.2",
     "@fastify/rate-limit": "^10.3.0",
     "@prisma/client": "6.4.0",
+    "amqplib": "^0.10.8",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.1",
     "cors": "^2.8.5",
