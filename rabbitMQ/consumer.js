@@ -1,6 +1,8 @@
 import amqplib from 'amqplib';
 
-const connection = await amqplib.connect('amqp://localhost:5672');
+// const connection = await amqplib.connect('amqp://localhost:5672');
+const connection = await amqplib.connect('amqp://rabbitmq:rabbitmq@localhost:5672');
+
 const channel = await connection.createChannel();
 
 const queue = 'task_queue';

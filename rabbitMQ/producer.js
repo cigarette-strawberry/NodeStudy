@@ -1,7 +1,9 @@
 import amqplib from 'amqplib';
 import express from 'express';
 
-const connection = await amqplib.connect('amqp://localhost:5672');
+// RabbitMQ 服务器地址（格式：amqp://用户名:密码@服务器IP:端口）
+// const connection = await amqplib.connect('amqp://localhost:5672');
+const connection = await amqplib.connect('amqp://rabbitmq:rabbitmq@localhost:5672');
 const channel = await connection.createChannel();
 
 const queue = 'task_queue';

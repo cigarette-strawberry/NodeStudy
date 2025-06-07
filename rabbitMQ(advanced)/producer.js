@@ -1,7 +1,8 @@
 import amqplib from 'amqplib';
 
 // 1.连接MQ
-const connection = await amqplib.connect('amqp://localhost:5672');
+// const connection = await amqplib.connect('amqp://localhost:5672');
+const connection = await amqplib.connect('amqp://rabbitmq:rabbitmq@localhost:5672');
 
 // 2.创建通道
 const channel = await connection.createChannel();
